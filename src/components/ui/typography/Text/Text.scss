@@ -1,0 +1,8 @@
+.text {
+	line-height: 1.625;
+	text-align: center;
+
+	&_white {
+		color: var(--white);
+	}
+}

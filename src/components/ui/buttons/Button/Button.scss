@@ -1,0 +1,23 @@
+.button {
+	line-height: 1.2;
+	border-radius: 80px;
+	padding: 5px 10px;
+	min-height: 34px;
+	min-width: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&_yellow {
+		background: var(--yellow);
+
+		&:hover {
+			background: var(--yellow-hover);
+		}
+	}
+
+	disabled {
+		background: var(--grey);
+		color: var(--white-87);
+	}
+}

@@ -1,0 +1,13 @@
+.title {
+	text-align: center;
+	font-size: 40px;
+
+	&_white {
+		color: var(--white);
+		margin: 0 0 21px;
+	}
+
+	&_black {
+		margin: 0 0 50px;
+	}
+}

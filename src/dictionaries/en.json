@@ -1,0 +1,29 @@
+{
+	"shared": {
+		"signup": "Sign up",
+		"users": "Users",
+		"show-more": "Show more",
+		"upload": "Upload"
+	},
+	"header": {
+		"users": "Users"
+	},
+	"hero": {
+		"title": "Test assignment for front-end developer",
+		"text": "What defines a good front-end developer is one that has skilled knowledge of HTML, CSS, JS with a vast understanding of User design thinking as they'll be building web interfaces with accessibility in mind. They should also be excited to learn, as the world of Front-End Development keeps evolving."
+	},
+	"users": {
+		"title": "Working with GET request"
+	},
+	"form": {
+		"title": "Working with POST request",
+		"selects-title": "Select your position",
+		"name-ph": "Your name",
+		"email-ph": "Email",
+		"phone-ph": "Phone",
+		"upload-ph": "Upload your photo"
+	},
+	"error": {
+		"test": ""
+	}
+}
