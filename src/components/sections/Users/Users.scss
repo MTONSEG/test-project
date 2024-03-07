@@ -1,0 +1,24 @@
+@import 'styles/mixins/media';
+
+.users {
+	margin: 0 0 140px;
+
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+		gap: 29px;
+		margin: 0 0 50px;
+	}
+
+	@include media-max(md) {
+		&__list {
+			gap: 16px;
+		}
+	}
+
+	@include media-max(xxs) {
+		&__list {
+			gap: 20px;
+		}
+	}
+}

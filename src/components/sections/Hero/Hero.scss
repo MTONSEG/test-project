@@ -36,5 +36,9 @@
 
 	@include media-min(sm) {
 		min-height: 650px;
+
+		&__row {
+			margin: 0 auto;
+		}
 	}
 }

@@ -1,7 +1,7 @@
 import type { IUsersData } from '../types/types'
 import { instance } from './axios.config'
 
-export const getUsers = async (query = undefined) => {
+export const getUsers = async (query: string | undefined = undefined) => {
 	const currentQuery = query ? `?${query}` : ''
 
 	try {
