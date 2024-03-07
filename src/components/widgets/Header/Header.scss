@@ -6,6 +6,7 @@
 	width: 100%;
 	left: 0;
 	top: 0;
+	z-index: 10;
 
 	&__row,
 	&__actions {
@@ -16,6 +17,10 @@
 	&__row {
 		padding: 13px 0;
 		justify-content: space-between;
+	}
+
+	&__actions {
+		margin: 0 0 0 15px;
 	}
 
 	&__btn {
