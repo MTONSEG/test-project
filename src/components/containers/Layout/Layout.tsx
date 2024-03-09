@@ -8,11 +8,11 @@ interface PropsType {
 
 const Layout: FC<PropsType> = ({ children }) => {
 	return (
-			<div className='wrapper'>
-				<Header />
+		<div className='wrapper'>
+			<Header />
 
-				<main className='main'>{children}</main>
-			</div>
+			<main className='main'>{children}</main>
+		</div>
 	)
 }
 
