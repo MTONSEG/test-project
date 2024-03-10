@@ -17,8 +17,9 @@
 		}
 	}
 
-	disabled {
+	&:disabled {
 		background: var(--grey);
 		color: var(--white-87);
+		pointer-events: none;
 	}
 }

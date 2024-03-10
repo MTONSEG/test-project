@@ -24,6 +24,8 @@
 		"upload-ph": "Upload your photo"
 	},
 	"error": {
-		"test": ""
+		"invalid-phone": "invalid format. Example +380501234567",
+		"invalid-email": "email must be a valid email",
+		"invalid-photo": "image must be in jpg/jpeg format, with a minimum resolution of 70x70px, and a file size not exceeding 5MB."
 	}
 }

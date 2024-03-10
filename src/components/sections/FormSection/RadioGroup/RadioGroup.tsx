@@ -8,12 +8,7 @@ interface PropsType {
 }
 
 const RadiosForm: FC<PropsType> = ({ positions }) => {
-	const {
-		control,
-		formState: { errors },
-	} = useFormContext()
-
-	
+	const { control } = useFormContext()
 
 	return (
 		<>
@@ -23,6 +18,7 @@ const RadiosForm: FC<PropsType> = ({ positions }) => {
 				defaultValue={1}
 				render={({ field }) => (
 					<RadioGroup {...field}>
+
 						{positions.map((el) => (
 							<FormControlLabel
 								value={el.id}
@@ -31,6 +27,7 @@ const RadiosForm: FC<PropsType> = ({ positions }) => {
 								key={el.id}
 							/>
 						))}
+						
 					</RadioGroup>
 				)}
 			/>

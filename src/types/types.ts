@@ -39,3 +39,9 @@ export interface IPosition {
 	name: string
 }
 
+export interface FormValues {
+	name: string
+	phone: string
+	email: string
+	position: string
+}

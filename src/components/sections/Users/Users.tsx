@@ -12,7 +12,7 @@ const Users = () => {
 	const [users, setUsers] = useState<IUser[]>([])
 	const [error, setError] = useState<boolean>(false)
 	const [count] = useState<number>(6)
-	const [page, setPage] = useState<number>(7)
+	const [page, setPage] = useState<number>(1)
 	const [showBtn, setShowBtn] = useState<boolean>(true)
 
 	const handleShow = () => {

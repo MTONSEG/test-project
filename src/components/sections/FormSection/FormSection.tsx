@@ -1,50 +1,24 @@
-import './Form.scss'
+import './FormSection.scss'
 import Container from '../../containers/Container/Container'
 import Heading from 'components/ui/typography/Heading/Heading'
 import { data } from 'dictionaries'
 import Button from 'components/ui/buttons/Button/Button'
 import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
-import InputsForm from 'components/sections/Form/InputsForm/InputsForm'
+import InputsForm from 'components/sections/FormSection/InputsForm/InputsForm'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import RadiosForm from 'components/sections/Form/RadioGroup/RadioGroup'
+import RadiosForm from 'components/sections/FormSection/RadioGroup/RadioGroup'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { getPositions } from 'services/getPositions'
-import { IPosition } from 'types/types'
-import { Input } from '@mui/material'
+import type { FormValues, IPosition } from 'types/types'
 import UploadFile from 'components/ui/forms/UploadFile'
+import { setUser } from 'services/setUser'
+import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
+import { prependPlus } from 'utils/prependPlus'
 
-export interface FormValues {
-	name: string
-	phone: string
-	email: string
-	position: string
-}
-
-const Form = () => {
+const FormSection = () => {
 	const [positions, setPositions] = useState<IPosition[]>([])
-	const [photo, setPhoto] = useState<File | null>(null)
+	const [photo, setPhoto] = useState<File | undefined>()
 	const [photoError, setPhotoError] = useState<boolean>(false)
-
-	const schema = yup.object().shape({
-		name: yup.string().required().min(2).max(60).required(),
-		phone: yup
-			.string()
-			.required()
-			.matches(
-				/^[+]{0,1}380([0-9]{9})$/,
-				'Invalid format. Example +380501234567'
-			),
-		email: yup
-			.string()
-			.required()
-			.matches(
-				// eslint-disable-next-line no-control-regex
-				/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/,
-				'email must be a valid email'
-			),
-		position: yup.string().required()
-	})
 
 	useEffect(() => {
 		getPositions().then((res) => {
@@ -53,29 +27,39 @@ const Form = () => {
 	}, [])
 
 	const methods = useForm<FormValues>({
-		resolver: yupResolver(schema)
+		resolver: yupResolver(schemaValidation)
 	})
 
 	const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-		// if (!photo) {
-		// 	setPhotoError(true)
-		// 	return
-		// }
-
-		const body = {
-			name: data.name,
-			phone: data.phone,
-			email: data.email,
-			position: Number(data.position),
-			photo
+		if (!photo) {
+			setPhotoError(true)
+			return
 		}
 
-		console.log(body);
-		
+		if (photoError) return
+
+		console.log(prependPlus(data.phone))
+
+		const formData = new FormData()
+
+		formData.append('name', data.name)
+		formData.append('email', data.email)
+		formData.append('phone', data.phone)
+		formData.append('photo', photo)
+		formData.append('position_id', data.position)
+
+		setUser(formData)
+			.then(() => {})
+			.catch((e) => {
+				console.error(e)
+			})
 	}
 
 	const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
-		if (!e.target.files?.length) return
+		if (!e.target.files?.length) {
+			setPhoto(undefined)
+			return
+		}
 
 		const file: File = e.target.files[0]
 
@@ -83,7 +67,7 @@ const Form = () => {
 
 		const image = new Image()
 
-		image.onload = (e) => {
+		image.onload = () => {
 			if (
 				image.width >= 70 &&
 				image.height >= 70 &&
@@ -102,6 +86,7 @@ const Form = () => {
 		<section className='form'>
 			<Container>
 				<Heading text={data.form.title} />
+
 				<FormProvider {...methods}>
 					<form
 						className='form__wrap'
@@ -115,10 +100,17 @@ const Form = () => {
 							<UploadFile
 								accept='image/jpeg, image/jpg'
 								onChange={handleUpload}
-								required
+								placeholder='Upload to photo'
+								fileName={photo?.name}
+								error={photoError}
+								errorMess={data.error['invalid-photo']}
 							/>
 						</div>
-						<Button className='form__btn' type='submit'>
+						<Button
+							className='form__btn'
+							type='submit'
+							// disabled={!methods.formState.isValid || !photo || photoError}
+						>
 							{data.shared.signup}
 						</Button>
 					</form>
@@ -128,4 +120,4 @@ const Form = () => {
 	)
 }
 
-export default Form
+export default FormSection

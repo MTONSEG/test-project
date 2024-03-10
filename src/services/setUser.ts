@@ -1,18 +1,19 @@
+import { getToken } from 'services/getToken'
 import { instance } from './axios.config'
 
-interface IBody {
-	name: string
-	email: string
-	phone: string
-	position_id: string,
-	photo: File
-}
-
-export const setUser = async <T>(body: IBody) => {
+export const setUser = async (body: FormData) => {
 	try {
-		const response = await instance.post<T>(`/users`, body)
+		getToken().then(async (res) => {
+			console.log(res?.token);
+			
 
-		return response.data
+			await instance.post(`/users`, body, {
+				headers: {
+					Token: res?.token
+				}
+			}).then((res) => {console.log(res);
+			})
+		})
 	} catch (error) {
 		console.error('Failed create user:', error)
 	}
