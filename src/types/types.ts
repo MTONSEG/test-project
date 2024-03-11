@@ -45,3 +45,10 @@ export interface FormValues {
 	email: string
 	position: string
 }
+
+export interface IAppState {
+	users: IUser[]
+	userPerPage: number
+	currentPage: number
+	isRegister: boolean
+}

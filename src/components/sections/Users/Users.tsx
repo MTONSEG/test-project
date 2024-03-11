@@ -2,38 +2,36 @@ import Heading from 'components/ui/typography/Heading/Heading'
 import Container from '../../containers/Container/Container'
 import './Users.scss'
 import { data } from 'dictionaries'
-import { useEffect, useState } from 'react'
-import { IUser } from 'types/types'
+import { useContext, useEffect, useState } from 'react'
 import { getUsers } from 'services/getUsers'
 import Card from 'components/ui/cards/Card/Card'
 import Button from 'components/ui/buttons/Button/Button'
+import { AppContext } from 'context/AppContext'
 
 const Users = () => {
-	const [users, setUsers] = useState<IUser[]>([])
-	const [error, setError] = useState<boolean>(false)
-	const [count] = useState<number>(6)
-	const [page, setPage] = useState<number>(1)
+	const { state, setState } = useContext(AppContext)
+	const { users, currentPage, userPerPage } = state
+
 	const [showBtn, setShowBtn] = useState<boolean>(true)
 
 	const handleShow = () => {
-		setPage((page) => page + 1)
+		setState({ ...state, currentPage: currentPage + 1 })
 	}
 
 	useEffect(() => {
-		getUsers(`count=${count}&page=${page}`)
-			.then((res) => {
-				if (error) setError(false)
+		getUsers(`count=${userPerPage}&page=${currentPage}`).then((res) => {
+			if (currentPage === res?.total_pages) {
+				setShowBtn(false)
+			}
 
-				if (page === res?.total_pages) {
-					setShowBtn(false)
-				}
+			const newUsers = [...users, ...(res?.users ? res.users : [])]
 
-				setUsers([...users, ...(res?.users ? res.users : [])])
+			setState({
+				...state,
+				users: newUsers
 			})
-			.catch((e) => {
-				setError(true)
-			})
-	}, [page, count])
+		})
+	}, [state.currentPage])
 
 	const userList = users?.map((el) => (
 		<Card
