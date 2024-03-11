@@ -2,20 +2,22 @@ import Heading from 'components/ui/typography/Heading/Heading'
 import Container from '../../containers/Container/Container'
 import './Users.scss'
 import { data } from 'dictionaries'
-import { useContext, useEffect, useState } from 'react'
+import { memo, useContext, useEffect, useState } from 'react'
 import { getUsers } from 'services/getUsers'
 import Card from 'components/ui/cards/Card/Card'
 import Button from 'components/ui/buttons/Button/Button'
 import { AppContext } from 'context/AppContext'
 
-const Users = () => {
+const Users = memo(() => {
 	const { state, setState } = useContext(AppContext)
-	const { users, currentPage, userPerPage } = state
+	const { users, currentPage, userPerPage, isRegister } = state
 
 	const [showBtn, setShowBtn] = useState<boolean>(true)
 
 	const handleShow = () => {
 		setState({ ...state, currentPage: currentPage + 1 })
+
+		console.log(state)
 	}
 
 	useEffect(() => {
@@ -24,14 +26,17 @@ const Users = () => {
 				setShowBtn(false)
 			}
 
-			const newUsers = [...users, ...(res?.users ? res.users : [])]
+			const newUsers =
+				currentPage === 1
+					? [...(res?.users ? res.users : [])]
+					: [...users, ...(res?.users ? res.users : [])]
 
 			setState({
 				...state,
 				users: newUsers
 			})
 		})
-	}, [state.currentPage])
+	}, [currentPage, isRegister])
 
 	const userList = users?.map((el) => (
 		<Card
@@ -63,6 +68,6 @@ const Users = () => {
 			</Container>
 		</section>
 	)
-}
+})
 
 export default Users

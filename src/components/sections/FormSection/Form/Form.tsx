@@ -4,12 +4,12 @@ import RadiosForm from 'components/sections/FormSection/Form/RadioGroup/RadioGro
 import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
 import Button from 'components/ui/buttons/Button/Button'
 import UploadFile from 'components/ui/forms/UploadFile'
+import Text from 'components/ui/typography/Text/Text'
 import { AppContext } from 'context/AppContext'
 import { data } from 'dictionaries'
 import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { getPositions } from 'services/getPositions'
-import { getUsers } from 'services/getUsers'
 import { setUser } from 'services/setUser'
 import { FormValues, IFormState } from 'types/types'
 
@@ -21,7 +21,8 @@ const Form = () => {
 	const [state, setState] = useState<IFormState>({
 		positions: [],
 		photo: undefined,
-		isErrorPhoto: false
+		isErrorPhoto: false,
+		errorMess: ''
 	})
 
 	// Fetch positions on component mount
@@ -41,11 +42,9 @@ const Form = () => {
 		resolver: yupResolver(schemaValidation)
 	})
 
-	const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-		if (!state.photo || state.isErrorPhoto) {
-			setState({ ...state, isErrorPhoto: true })
-			return
-		}
+	const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+		if (!state.photo || state.isErrorPhoto) return
+		console.log('start')
 
 		const formData = new FormData()
 
@@ -55,19 +54,22 @@ const Form = () => {
 		formData.append('photo', state.photo)
 		formData.append('position_id', data.position)
 
-		setUser(formData)
-			.then(async () => {
-				const res = await getUsers(`page=${1}&count=${appState.userPerPage}`)
+		await setUser(formData)
+			.then((res) => {
+				console.log('created User')
 
 				setAppState({
 					...appState,
-					users: [...(res?.users ? res.users : [])],
 					currentPage: 1,
 					isRegister: true
 				})
+
+				console.log('response', res?.data.success)
 			})
-			.catch((e) => {
-				console.error(e)
+			.catch((error) => {
+				if (error instanceof Error) {
+					setState({ ...state, errorMess: error.message })
+				}
 			})
 	}
 
@@ -99,6 +101,12 @@ const Form = () => {
 	return (
 		<FormProvider {...methods}>
 			<form className='form__wrap' onSubmit={methods.handleSubmit(onSubmit)}>
+				{state.errorMess && (
+					<Text className='form__error-text' color='red'>
+						{state.errorMess}
+					</Text>
+				)}
+
 				<div className='form__inputs-wrap'>
 					<InputsForm />
 
@@ -113,10 +121,13 @@ const Form = () => {
 						errorMess={data.error['invalid-photo']}
 					/>
 				</div>
+
 				<Button
 					className='form__btn'
 					type='submit'
-					// disabled={!methods.formState.isValid || !photo || photoError}
+					disabled={
+						!methods.formState.isValid || !state.photo || state.isErrorPhoto
+					}
 				>
 					{data.shared.signup}
 				</Button>

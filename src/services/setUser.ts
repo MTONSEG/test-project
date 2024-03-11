@@ -1,20 +1,22 @@
 import { getToken } from 'services/getToken'
-import { instance } from './axios.config'
+import { instance, AxiosErrorType } from './axios.config'
 
 export const setUser = async (body: FormData) => {
 	try {
-		getToken().then(async (res) => {
-			console.log(res?.token);
-			
+		const token = (await getToken())?.token
 
-			await instance.post(`/users`, body, {
-				headers: {
-					Token: res?.token
-				}
-			}).then((res) => {console.log(res);
-			})
+		const data = await instance.post(`/users`, body, {
+			headers: {
+				Token: token
+			}
 		})
+
+		return data
 	} catch (error) {
-		console.error('Failed create user:', error)
+		if (error instanceof AxiosErrorType) {
+			throw new Error(error.response?.data.message)
+		}
+
+		throw new Error('Failed fetching data')
 	}
 }

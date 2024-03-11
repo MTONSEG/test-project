@@ -56,5 +56,6 @@ export interface IAppState {
 export interface IFormState {
 	positions: IPosition[]
 	photo: File | undefined
-	isErrorPhoto: boolean
+	isErrorPhoto: boolean,
+	errorMess: string
 }

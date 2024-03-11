@@ -2,9 +2,8 @@ import type { FC, ReactNode } from 'react'
 import './Text.scss'
 
 interface PropsType {
-
 	children: ReactNode | string
-	color?: 'white' | 'black'
+	color?: 'white' | 'black' | 'red'
 	className?: string
 }
 

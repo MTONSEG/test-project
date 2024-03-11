@@ -17,3 +17,5 @@ export const AppContext = createContext<IAppContext>({
 	state: appState,
 	setState: () => {}
 })
+
+export const AppProvider = AppContext.Provider
