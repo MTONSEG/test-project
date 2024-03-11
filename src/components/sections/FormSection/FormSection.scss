@@ -29,4 +29,17 @@
 	&__error-text {
 		margin: 0 0 20px;
 	}
+
+	& .MuiInputLabel-root,
+	& .MuiInputLabel-root.Mui-focused {
+		color: var(--dark-grey);
+	}
+
+	& .MuiInputLabel-root {
+		font-size: 16px;
+
+		&.Mui-error {
+			color: var(--error);
+		}
+	}
 }
