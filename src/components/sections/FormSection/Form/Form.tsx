@@ -17,6 +17,8 @@ const Form = () => {
 	// Getting the application state from the context
 	const { state: appState, setState: setAppState } = useContext(AppContext)
 
+	const [isLoading, setLoading] = useState<boolean>(false)
+
 	// Initializing the local form state
 	const [state, setState] = useState<IFormState>({
 		positions: [],
@@ -53,6 +55,8 @@ const Form = () => {
 		formData.append('photo', state.photo)
 		formData.append('position_id', data.position)
 
+		setLoading(true)
+
 		await setUser(formData)
 			.then((res) => {
 				setAppState({
@@ -63,9 +67,13 @@ const Form = () => {
 			})
 			.catch((error) => {
 				if (error instanceof Error) {
+					console.log(error.message)
+
 					setState({ ...state, errorMess: error.message })
 				}
 			})
+
+		setLoading(false)
 	}
 
 	// Handle file upload and image validation
@@ -102,27 +110,29 @@ const Form = () => {
 					</Text>
 				)}
 
-				<div className='form__inputs-wrap'>
-					<InputsForm />
+				<InputsForm />
 
-					<RadiosForm positions={state.positions} />
+				<RadiosForm positions={state.positions} />
 
-					<UploadFile
-						accept='image/jpeg, image/jpg'
-						onChange={handleUpload}
-						placeholder='Upload to photo'
-						fileName={state.photo?.name}
-						error={state.isErrorPhoto}
-						errorMess={data.error['invalid-photo']}
-					/>
-				</div>
+				<UploadFile
+					accept='image/jpeg, image/jpg'
+					onChange={handleUpload}
+					placeholder='Upload to photo'
+					fileName={state.photo?.name}
+					error={state.isErrorPhoto}
+					errorMess={data.error['invalid-photo']}
+				/>
 
 				<Button
 					className='form__btn'
 					type='submit'
-					// disabled={
-					// 	!methods.formState.isValid || !state.photo || state.isErrorPhoto
-					// }
+					isLoading={isLoading}
+					disabled={
+						!methods.formState.isValid ||
+						!state.photo ||
+						state.isErrorPhoto ||
+						isLoading
+					}
 				>
 					{data.shared.signup}
 				</Button>

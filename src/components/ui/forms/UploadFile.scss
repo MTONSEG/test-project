@@ -15,14 +15,10 @@
 			color: var(--error);
 			outline: 1px solid var(--error);
 		}
-
-		&:hover .upload-file__custom-label {
-			background: var(--error);
-		}
 	}
 
 	&__error {
-		font-size: 12px;
+		font-size: 14px;
 		padding: 4px 16px;
 		color: var(--error);
 		line-height: 1.2;
@@ -68,8 +64,14 @@
 		}
 	}
 
-	&:hover .upload-file__custom-label {
-		background: var(--black-87);
-		color: var(--white);
+	@media (hover: hover) {
+		&:hover .upload-file__custom-label {
+			background: var(--black-87);
+			color: var(--white);
+		}
+
+		&.error:hover .upload-file__custom-label {
+			background: var(--error);
+		}
 	}
 }

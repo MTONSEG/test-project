@@ -1,6 +1,8 @@
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 import './Card.scss'
-import { formatPhoneNumber } from '../../../../utils/formatPhoneNumber'
+
+import imagePlaceholder from 'assets/icons/photo-ph.svg'
+import { formatPhoneNumber } from 'utils/formatPhoneNumber'
 
 interface PropsType {
 	imageSrc: string
@@ -11,20 +13,23 @@ interface PropsType {
 }
 
 const Card: FC<PropsType> = ({ ...props }) => {
+	const [imageError, setImageError] = useState<boolean>(false)
+
 	return (
 		<li className='card'>
 			<div className='card__image-wrap'>
 				<img
-					src={props.imageSrc}
+					src={imageError ? imagePlaceholder : props.imageSrc}
 					alt={props.name}
 					className='card__image'
 					loading='lazy'
+					onError={() => {
+						setImageError(true)
+					}}
 				/>
 			</div>
 
-			<h3 className='card__name'>
-				{props.name}
-			</h3>
+			<h3 className='card__name'>{props.name}</h3>
 
 			<ul className='card__list'>
 				<li className='card__list-item'>{props.position}</li>

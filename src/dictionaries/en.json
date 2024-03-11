@@ -22,7 +22,8 @@
 		"email-ph": "Email",
 		"phone-ph": "Phone",
 		"upload-ph": "Upload your photo",
-		"success-register": "User successfully registered"
+		"success-register": "User successfully registered",
+		"radio-title": "Select your position"
 	},
 	"error": {
 		"invalid-phone": "invalid format. Example +380501234567",

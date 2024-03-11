@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material'
 import { data } from 'dictionaries'
+import { CSSProperties } from 'react'
 import { useFormContext, Controller } from 'react-hook-form'
 
 const InputsForm = () => {
@@ -8,8 +9,12 @@ const InputsForm = () => {
 		formState: { errors }
 	} = useFormContext()
 
+	const styles: CSSProperties = {
+		margin: '0 0 50px'
+	}
+
 	return (
-		<>
+		<div className='form__inputs-wrap'>
 			<Controller
 				name='name'
 				control={control}
@@ -22,6 +27,7 @@ const InputsForm = () => {
 						label={data.form['name-ph']}
 						error={!!errors.name}
 						helperText={errors.name?.message as string}
+						sx={styles}
 					/>
 				)}
 			/>
@@ -38,6 +44,7 @@ const InputsForm = () => {
 						label={data.form['email-ph']}
 						error={!!errors.email}
 						helperText={errors.email?.message as string}
+						sx={styles}
 					/>
 				)}
 			/>
@@ -61,7 +68,7 @@ const InputsForm = () => {
 					/>
 				)}
 			/>
-		</>
+		</div>
 	)
 }
 

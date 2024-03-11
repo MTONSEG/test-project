@@ -22,4 +22,9 @@
 		color: var(--white-87);
 		pointer-events: none;
 	}
+
+	& .MuiCircularProgress-root {
+		width: 20px !important;
+		height: 20px !important;
+	}
 }
