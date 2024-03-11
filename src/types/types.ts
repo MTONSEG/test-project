@@ -52,3 +52,9 @@ export interface IAppState {
 	currentPage: number
 	isRegister: boolean
 }
+
+export interface IFormState {
+	positions: IPosition[]
+	photo: File | undefined
+	isErrorPhoto: boolean
+}

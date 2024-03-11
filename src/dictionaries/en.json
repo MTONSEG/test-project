@@ -21,7 +21,8 @@
 		"name-ph": "Your name",
 		"email-ph": "Email",
 		"phone-ph": "Phone",
-		"upload-ph": "Upload your photo"
+		"upload-ph": "Upload your photo",
+		"success-register": "User successfully registered"
 	},
 	"error": {
 		"invalid-phone": "invalid format. Example +380501234567",

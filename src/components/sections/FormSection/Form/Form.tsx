@@ -4,96 +4,112 @@ import RadiosForm from 'components/sections/FormSection/Form/RadioGroup/RadioGro
 import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
 import Button from 'components/ui/buttons/Button/Button'
 import UploadFile from 'components/ui/forms/UploadFile'
+import { AppContext } from 'context/AppContext'
 import { data } from 'dictionaries'
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { getPositions } from 'services/getPositions'
+import { getUsers } from 'services/getUsers'
 import { setUser } from 'services/setUser'
-import { FormValues, IPosition } from 'types/types'
-import { prependPlus } from 'utils/prependPlus'
+import { FormValues, IFormState } from 'types/types'
 
-interface PropsType {}
+const Form = () => {
+	// Getting the application state from the context
+	const { state: appState, setState: setAppState } = useContext(AppContext)
 
-const Form: FC<PropsType> = ({ ...props }) => {
-		const [positions, setPositions] = useState<IPosition[]>([])
-		const [photo, setPhoto] = useState<File | undefined>()
-		const [photoError, setPhotoError] = useState<boolean>(false)
+	// Initializing the local form state
+	const [state, setState] = useState<IFormState>({
+		positions: [],
+		photo: undefined,
+		isErrorPhoto: false
+	})
 
-		useEffect(() => {
+	// Fetch positions on component mount
+	useEffect(() => {
+		if (!state.positions.length)
 			getPositions().then((res) => {
-				setPositions([...(res?.positions ? res.positions : [])])
+				const positions = [...(res?.positions ? res?.positions : [])]
+
+				setState({ ...state, positions })
 			})
-		}, [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
-		const methods = useForm<FormValues>({
-			resolver: yupResolver(schemaValidation)
-		})
+	// Form validation and submission handling
+	// Initializing form control methods using the react-hook-form library
+	const methods = useForm<FormValues>({
+		resolver: yupResolver(schemaValidation)
+	})
 
-		const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-			if (!photo) {
-				setPhotoError(true)
-				return
-			}
+	const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
+		if (!state.photo || state.isErrorPhoto) {
+			setState({ ...state, isErrorPhoto: true })
+			return
+		}
 
-			if (photoError) return
+		const formData = new FormData()
 
-			console.log(prependPlus(data.phone))
+		formData.append('name', data.name)
+		formData.append('email', data.email)
+		formData.append('phone', data.phone)
+		formData.append('photo', state.photo)
+		formData.append('position_id', data.position)
 
-			const formData = new FormData()
+		setUser(formData)
+			.then(async () => {
+				const res = await getUsers(`page=${1}&count=${appState.userPerPage}`)
 
-			formData.append('name', data.name)
-			formData.append('email', data.email)
-			formData.append('phone', data.phone)
-			formData.append('photo', photo)
-			formData.append('position_id', data.position)
-
-			setUser(formData)
-				.then(() => {})
-				.catch((e) => {
-					console.error(e)
+				setAppState({
+					...appState,
+					users: [...(res?.users ? res.users : [])],
+					currentPage: 1,
+					isRegister: true
 				})
+			})
+			.catch((e) => {
+				console.error(e)
+			})
+	}
+
+	// Handle file upload and image validation
+	const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
+		// Checking for the presence of a file
+		if (!e.target.files?.length) {
+			setState({ ...state, photo: undefined })
+			return
 		}
 
-		const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
-			if (!e.target.files?.length) {
-				setPhoto(undefined)
-				return
-			}
+		const photo: File = e.target.files[0]
 
-			const file: File = e.target.files[0]
+		// Creating an Image object for image validation
+		const image = new Image()
 
-			setPhoto(e.target.files[0])
+		image.src = URL.createObjectURL(photo)
 
-			const image = new Image()
+		image.onload = () => {
+			// File upload and image validation handler
+			const isErrorPhoto =
+				image.width <= 70 && image.height <= 70 && photo.size >= 5 * 1024 * 1024
 
-			image.onload = () => {
-				if (
-					image.width >= 70 &&
-					image.height >= 70 &&
-					file.size <= 5 * 1024 * 1024
-				) {
-					photoError && setPhotoError(false)
-				} else {
-					setPhotoError(true)
-				}
-			}
-
-			image.src = URL.createObjectURL(file)
+			// Setting the photo error and photo state
+			setState({ ...state, isErrorPhoto, photo })
 		}
+	}
+
 	return (
 		<FormProvider {...methods}>
 			<form className='form__wrap' onSubmit={methods.handleSubmit(onSubmit)}>
 				<div className='form__inputs-wrap'>
 					<InputsForm />
 
-					<RadiosForm positions={positions} />
+					<RadiosForm positions={state.positions} />
 
 					<UploadFile
 						accept='image/jpeg, image/jpg'
 						onChange={handleUpload}
 						placeholder='Upload to photo'
-						fileName={photo?.name}
-						error={photoError}
+						fileName={state.photo?.name}
+						error={state.isErrorPhoto}
 						errorMess={data.error['invalid-photo']}
 					/>
 				</div>
