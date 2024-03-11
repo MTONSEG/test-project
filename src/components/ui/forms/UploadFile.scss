@@ -13,6 +13,7 @@
 		& .upload-file__custom-text {
 			border-color: var(--error);
 			color: var(--error);
+			outline: 1px solid var(--error);
 		}
 
 		&:hover .upload-file__custom-label {
@@ -49,7 +50,6 @@
 		border-radius: 4px 0 0 4px;
 		color: var(--black-87);
 		flex: 0 0 auto;
-		transition: background-color 0.2s, color 0.2s;
 	}
 
 	&__custom-text {
@@ -58,6 +58,7 @@
 		border: 1px solid var(--grey);
 		border-radius: 0 4px 4px 0;
 		border-width: 1px 1px 1px 0;
+
 		span {
 			display: -webkit-box;
 			-webkit-box-orient: vertical;

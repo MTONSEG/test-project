@@ -44,7 +44,6 @@ const Form = () => {
 
 	const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
 		if (!state.photo || state.isErrorPhoto) return
-		console.log('start')
 
 		const formData = new FormData()
 
@@ -56,15 +55,11 @@ const Form = () => {
 
 		await setUser(formData)
 			.then((res) => {
-				console.log('created User')
-
 				setAppState({
 					...appState,
 					currentPage: 1,
 					isRegister: true
 				})
-
-				console.log('response', res?.data.success)
 			})
 			.catch((error) => {
 				if (error instanceof Error) {
@@ -91,7 +86,7 @@ const Form = () => {
 		image.onload = () => {
 			// File upload and image validation handler
 			const isErrorPhoto =
-				image.width <= 70 && image.height <= 70 && photo.size >= 5 * 1024 * 1024
+				image.width >= 70 && image.height >= 70 && photo.size > 5 * 1024 * 1024
 
 			// Setting the photo error and photo state
 			setState({ ...state, isErrorPhoto, photo })
@@ -125,9 +120,9 @@ const Form = () => {
 				<Button
 					className='form__btn'
 					type='submit'
-					disabled={
-						!methods.formState.isValid || !state.photo || state.isErrorPhoto
-					}
+					// disabled={
+					// 	!methods.formState.isValid || !state.photo || state.isErrorPhoto
+					// }
 				>
 					{data.shared.signup}
 				</Button>

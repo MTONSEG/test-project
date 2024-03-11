@@ -22,7 +22,7 @@ const RadiosForm: FC<PropsType> = ({ positions }) => {
 						{positions.map((el) => (
 							<FormControlLabel
 								value={el.id}
-								control={<Radio />}
+								control={<Radio color='secondary' />}
 								label={el.name}
 								key={el.id}
 							/>
