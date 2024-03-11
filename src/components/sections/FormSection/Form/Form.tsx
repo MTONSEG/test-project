@@ -3,7 +3,7 @@ import InputsForm from 'components/sections/FormSection/Form/InputsForm/InputsFo
 import RadiosForm from 'components/sections/FormSection/Form/RadioGroup/RadioGroup'
 import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
 import Button from 'components/ui/buttons/Button/Button'
-import UploadFile from 'components/ui/forms/UploadFile'
+import UploadFile from 'components/ui/forms/UploadFile/UploadFile'
 import Text from 'components/ui/typography/Text/Text'
 import { AppContext } from 'context/AppContext'
 import { data } from 'dictionaries'
@@ -58,7 +58,7 @@ const Form = () => {
 		setLoading(true)
 
 		await setUser(formData)
-			.then((res) => {
+			.then(() => {
 				setAppState({
 					...appState,
 					currentPage: 1,
@@ -122,7 +122,7 @@ const Form = () => {
 					error={state.isErrorPhoto}
 					errorMess={data.error['invalid-photo']}
 				/>
-
+				
 				<Button
 					className='form__btn'
 					type='submit'

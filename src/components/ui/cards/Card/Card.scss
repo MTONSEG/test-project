@@ -19,8 +19,8 @@
 		height: 100%;
 	}
 
-	&__name,
-	&__list-item {
+	&__name span,
+	&__list-item span {
 		line-height: 1.625;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
@@ -28,6 +28,7 @@
 		-webkit-line-clamp: 1;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		position: relative;
 	}
 
 	&__name {

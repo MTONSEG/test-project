@@ -13,6 +13,16 @@ export const theme = createTheme({
 		}
 	},
 	typography: {
-		fontFamily: 'Nunito, sans serif',
+		fontFamily: 'Nunito, sans serif'
+	},
+	components: {
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					background: 'rgba(0, 0, 0, 0.87)',
+					fontSize: '16px'
+				}
+			}
+		}
 	}
 })
