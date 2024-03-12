@@ -5,15 +5,20 @@
 	max-width: 1290px;
 	margin: 0 auto;
 	padding: 0 60px;
+	position: relative;
 
 	&_hero {
-		position: relative;
 		z-index: 2;
 		flex: 1 1 auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+	}
+
+	& .MuiCircularProgress-root {
+		margin: 0 auto;
+		display: block;
 	}
 
 	@include media-max(md) {

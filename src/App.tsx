@@ -1,9 +1,14 @@
+import Container from 'components/containers/Container/Container'
 import Layout from 'components/containers/Layout/Layout'
-import FormSection from 'components/sections/FormSection/FormSection'
-import Hero from 'components/sections/Hero/Hero'
-import Users from 'components/sections/Users/Users'
+import Loading from 'components/ui/loaders/Loading/Loading'
 import { AppContext, appState } from 'context/AppContext'
-import { useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
+
+const Users = lazy(() => import('components/sections/Users/Users'))
+const Hero = lazy(() => import('components/sections/Hero/Hero'))
+const FormSection = lazy(
+	() => import('components/sections/FormSection/FormSection')
+)
 
 const App = () => {
 	const [state, setState] = useState(appState)
@@ -12,8 +17,13 @@ const App = () => {
 		<Layout>
 			<AppContext.Provider value={{ state, setState }}>
 				<Hero />
-				<Users />
-				<FormSection />
+
+				<Container>
+					<Suspense fallback={<Loading />}>
+						<Users />
+						<FormSection />
+					</Suspense>
+				</Container>
 			</AppContext.Provider>
 		</Layout>
 	)
