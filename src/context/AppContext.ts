@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext } from 'react'
 import type { IAppState } from 'types/types'
 
 export const appState: IAppState = {

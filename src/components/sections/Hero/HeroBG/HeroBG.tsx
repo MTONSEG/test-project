@@ -1,25 +1,16 @@
-import { FC } from 'react'
-import img from 'assets/images/hero/hero.jpeg'
-import webp from 'assets/images/hero/hero.webp'
-import imgTab from 'assets/images/hero/hero_768.jpg'
-import webTab from 'assets/images/hero/hero_768.jpg'
-import imgMob from 'assets/images/hero/hero_360.jpg'
-import webMob from 'assets/images/hero/hero_360.jpg'
 import Image from 'components/ui/images/Image/Image'
 
-interface PropsType {}
-
-const HeroBG: FC<PropsType> = () => {
+const HeroBG = () => {
 	return (
 		<Image
 			className='hero__bg'
-			src={img}
-			webpSrc={webp}
-			imgTab={imgTab}
-			webpTab={webTab}
+			src={'/hero/hero.jpeg'}
+			webpSrc={'/hero/hero.webp'}
+			imgTab={'/hero/hero_768.jpg'}
+			webpTab={'/hero/hero_768.webp'}
+			imgMob={'/hero/hero_360.jpg'}
+			webpMob={'/hero/hero_360.webp'}
 			widthTab={1024}
-			imgMob={imgMob}
-			webpMob={webMob}
 			widthMob={480}
 			width={1170}
 			height={650}

@@ -69,7 +69,7 @@ const Image: FC<PropsType> = ({
 				''
 			)}
 			<source srcSet={webpSrc} type='image/webp' />
-			<img src={src} {...props} alt={props.alt} />
+			<img src={src} {...props} alt={props.alt}/>
 		</picture>
 	)
 }

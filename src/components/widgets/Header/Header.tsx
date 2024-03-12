@@ -14,7 +14,7 @@ const Header: FC<PropsType> = ({ ...props }) => {
 		<header className='header'>
 			<Container>
 				<div className='header__row'>
-					<Image src={logo} webpSrc={logoWebp} width={104} height={28} />
+					<Image src={logo} webpSrc={logoWebp} width={104} height={28} alt='Logo' />
 
 					<div className='header__actions'>
 						<Button className='header__btn'>{data.shared.users}</Button>
