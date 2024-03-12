@@ -1,7 +1,7 @@
 import Heading from 'components/ui/typography/Heading/Heading'
 import './Users.scss'
 import { data } from 'dictionaries'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { getUsers } from 'services/getUsers'
 import Card from 'components/ui/cards/Card/Card'
 import Button from 'components/ui/buttons/Button/Button'
@@ -11,10 +11,7 @@ const Users = () => {
 	// Accessing the application context
 	const { state, setState } = useContext(AppContext)
 	// Destructuring state variables
-	const { users, currentPage, userPerPage, isRegister } = state
-
-	// State for controlling the visibility of the "Show more users" button
-	const [showBtn, setShowBtn] = useState<boolean>(true)
+	const { users, currentPage, userPerPage, isRegister, isShowBtn } = state
 
 	const handleShow = () => {
 		setState({ ...state, currentPage: currentPage + 1 })
@@ -22,8 +19,6 @@ const Users = () => {
 
 	useEffect(() => {
 		getUsers(`count=${userPerPage}&page=${currentPage}`).then((res) => {
-			currentPage === res?.total_pages && setShowBtn(false)
-
 			// Updating the users state based on the fetched data
 			const newUsers =
 				currentPage === 1
@@ -32,7 +27,8 @@ const Users = () => {
 
 			setState({
 				...state,
-				users: newUsers
+				users: newUsers,
+				isShowBtn: currentPage !== res?.total_pages
 			})
 		})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,7 +51,7 @@ const Users = () => {
 
 			<ul className='users__list'>{users.length ? userList : <>Empty</>}</ul>
 
-			{showBtn && (
+			{isShowBtn && (
 				<Button
 					onClick={handleShow}
 					aria-label='Show more users'

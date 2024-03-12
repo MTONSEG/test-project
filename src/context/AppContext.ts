@@ -5,7 +5,8 @@ export const appState: IAppState = {
 	users: [],
 	userPerPage: 6,
 	currentPage: 1,
-	isRegister: false
+	isRegister: false,
+	isShowBtn: true
 }
 
 interface IAppContext {

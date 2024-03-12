@@ -51,11 +51,12 @@ export interface IAppState {
 	userPerPage: number
 	currentPage: number
 	isRegister: boolean
+	isShowBtn: boolean
 }
 
 export interface IFormState {
 	positions: IPosition[]
 	photo: File | undefined
-	isErrorPhoto: boolean,
+	isErrorPhoto: boolean
 	errorMess: string
 }
