@@ -1,12 +1,20 @@
+import {
+	Suspense,
+	lazy,
+	memo,
+	useContext,
+	useEffect,
+	useState
+} from 'react'
 import Heading from 'components/ui/typography/Heading/Heading'
 import './Users.scss'
 import { data } from 'dictionaries'
-import { Suspense, memo, useContext, useEffect, useState } from 'react'
 import { getUsers } from 'services/getUsers'
-import Card from 'components/ui/cards/Card/Card'
 import Button from 'components/ui/buttons/Button/Button'
 import { AppContext } from 'context/AppContext'
 import Loading from 'components/ui/loaders/Loading/Loading'
+
+const Card = lazy(() => import('components/ui/cards/Card/Card'))
 
 const Users = memo(() => {
 	// Accessing the application context
