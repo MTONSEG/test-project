@@ -20,6 +20,7 @@ const RadiosForm: FC<PropsType> = ({ positions }) => {
 	return (
 		<FormControl>
 			<FormLabel>{data.form['radio-title']}</FormLabel>
+			
 			<Controller
 				control={control}
 				name='position'

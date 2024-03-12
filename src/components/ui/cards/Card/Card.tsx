@@ -23,6 +23,8 @@ const Card: FC<PropsType> = ({ ...props }) => {
 					alt={props.name}
 					className='card__image'
 					loading='lazy'
+					width={70}
+					height={70}
 					onError={() => {
 						setImageError(true)
 					}}

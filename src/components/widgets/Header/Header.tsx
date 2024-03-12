@@ -5,10 +5,10 @@ import { data } from 'dictionaries'
 import Image from 'components/ui/images/Image/Image'
 import logo from 'assets/images/logo.png'
 import logoWebp from 'assets/images/logo.webp'
-import { useCallback } from 'react'
+import { memo, useCallback } from 'react'
 import { scrollTo } from 'utils/scrollTo'
 
-const Header = () => {
+const Header = memo(() => {
 	const handleScroll = useCallback(scrollTo, [])
 
 	return (
@@ -26,6 +26,7 @@ const Header = () => {
 					<div className='header__actions'>
 						<Button
 							className='header__btn'
+							aria-label='Scroll to User List'
 							onClick={() => {
 								handleScroll('users-section')
 							}}
@@ -34,6 +35,7 @@ const Header = () => {
 						</Button>
 						<Button
 							className='header__btn'
+							aria-label='Scroll to Sign Up'
 							onClick={() => {
 								handleScroll('form-section')
 							}}
@@ -45,6 +47,6 @@ const Header = () => {
 			</Container>
 		</header>
 	)
-}
+})
 
 export default Header

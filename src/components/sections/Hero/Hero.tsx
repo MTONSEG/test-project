@@ -31,6 +31,7 @@ const Hero = () => {
 						onClick={() => {
 							handleScroll('form-section')
 						}}
+						aria-label='Scroll to Sign Up'
 					/>
 				</div>
 			</Container>

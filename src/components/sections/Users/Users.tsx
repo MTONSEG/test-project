@@ -1,13 +1,14 @@
 import Heading from 'components/ui/typography/Heading/Heading'
 import './Users.scss'
 import { data } from 'dictionaries'
-import { useContext, useEffect, useState } from 'react'
+import { Suspense, memo, useContext, useEffect, useState } from 'react'
 import { getUsers } from 'services/getUsers'
 import Card from 'components/ui/cards/Card/Card'
 import Button from 'components/ui/buttons/Button/Button'
 import { AppContext } from 'context/AppContext'
+import Loading from 'components/ui/loaders/Loading/Loading'
 
-const Users = () => {
+const Users = memo(() => {
 	// Accessing the application context
 	const { state, setState } = useContext(AppContext)
 	// Destructuring state variables
@@ -54,7 +55,9 @@ const Users = () => {
 		<section id='users-section' className='users'>
 			<Heading text={data.users.title} />
 
-			<ul className='users__list'>{users.length ? userList : <>Empty</>}</ul>
+			<Suspense fallback={<Loading />}>
+				<ul className='users__list'>{users.length ? userList : <>Empty</>}</ul>
+			</Suspense>
 
 			{isShowBtn && (
 				<Button
@@ -68,6 +71,6 @@ const Users = () => {
 			)}
 		</section>
 	)
-}
+})
 
 export default Users

@@ -1,19 +1,19 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+// import { yupResolver } from '@hookform/resolvers/yup'
 import InputsForm from 'components/sections/FormSection/Form/InputsForm/InputsForm'
 import RadiosForm from 'components/sections/FormSection/Form/RadioGroup/RadioGroup'
-import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
+// import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
 import Button from 'components/ui/buttons/Button/Button'
 import UploadFile from 'components/ui/forms/UploadFile/UploadFile'
 import Text from 'components/ui/typography/Text/Text'
 import { AppContext } from 'context/AppContext'
 import { data } from 'dictionaries'
-import { type ChangeEvent, useContext, useEffect, useState } from 'react'
+import { type ChangeEvent, useContext, useEffect, useState, memo } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { getPositions } from 'services/getPositions'
 import { setUser } from 'services/setUser'
 import type { FormValues, IFormState } from 'types/types'
 
-const Form = () => {
+const Form = memo(() => {
 	// Getting the application state from the context
 	const { state: appState, setState: setAppState } = useContext(AppContext)
 
@@ -41,7 +41,7 @@ const Form = () => {
 	// Form validation and submission handling
 	// Initializing form control methods using the react-hook-form library
 	const methods = useForm<FormValues>({
-		resolver: yupResolver(schemaValidation)
+		// resolver: yupResolver(schemaValidation)
 	})
 
 	const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
@@ -108,7 +108,7 @@ const Form = () => {
 						{state.errorMess}
 					</Text>
 				)}
-
+				
 				<InputsForm />
 
 				<RadiosForm positions={state.positions} />
@@ -138,6 +138,6 @@ const Form = () => {
 			</form>
 		</FormProvider>
 	)
-}
+})
 
 export default Form

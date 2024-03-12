@@ -27,9 +27,5 @@
 
 	@include media-max(xs) {
 		padding: 0 16px;
-
-		&_hero {
-			justify-content: flex-start;
-		}
 	}
 }
