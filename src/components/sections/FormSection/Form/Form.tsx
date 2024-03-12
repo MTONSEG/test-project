@@ -1,7 +1,5 @@
-// import { yupResolver } from '@hookform/resolvers/yup'
 import InputsForm from 'components/sections/FormSection/Form/InputsForm/InputsForm'
 import RadiosForm from 'components/sections/FormSection/Form/RadioGroup/RadioGroup'
-// import { schemaValidation } from 'components/sections/FormSection/schemaValidation'
 import Button from 'components/ui/buttons/Button/Button'
 import UploadFile from 'components/ui/forms/UploadFile/UploadFile'
 import Text from 'components/ui/typography/Text/Text'
@@ -40,9 +38,7 @@ const Form = memo(() => {
 
 	// Form validation and submission handling
 	// Initializing form control methods using the react-hook-form library
-	const methods = useForm<FormValues>({
-		// resolver: yupResolver(schemaValidation)
-	})
+	const methods = useForm<FormValues>()
 
 	const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
 		if (!state.photo || state.isErrorPhoto) return
@@ -108,7 +104,7 @@ const Form = memo(() => {
 						{state.errorMess}
 					</Text>
 				)}
-				
+
 				<InputsForm />
 
 				<RadiosForm positions={state.positions} />
@@ -121,7 +117,7 @@ const Form = memo(() => {
 					error={state.isErrorPhoto}
 					errorMess={data.error['invalid-photo']}
 				/>
-				
+
 				<Button
 					className='form__btn'
 					type='submit'

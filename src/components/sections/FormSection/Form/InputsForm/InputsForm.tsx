@@ -1,4 +1,5 @@
-import  TextField  from '@mui/material/TextField'
+import TextField from '@mui/material/TextField'
+import { formRegex } from 'components/sections/FormSection/regex'
 import { data } from 'dictionaries'
 import { CSSProperties } from 'react'
 import { useFormContext, Controller } from 'react-hook-form'
@@ -19,6 +20,17 @@ const InputsForm = () => {
 				name='name'
 				control={control}
 				defaultValue=''
+				rules={{
+					required: data.error.required,
+					maxLength: {
+						value: 60,
+						message: data.error['max-length-name']
+					},
+					minLength: {
+						value: 2,
+						message: data.error['min-length-name']
+					}
+				}}
 				render={({ field }) => (
 					<TextField
 						{...field}
@@ -36,6 +48,13 @@ const InputsForm = () => {
 				name='email'
 				control={control}
 				defaultValue=''
+				rules={{
+					required: data.error.required,
+					pattern: {
+						value: formRegex.email,
+						message: data.error['invalid-email']
+					}
+				}}
 				render={({ field }) => (
 					<TextField
 						{...field}
@@ -53,6 +72,13 @@ const InputsForm = () => {
 				name='phone'
 				control={control}
 				defaultValue=''
+				rules={{
+					required: data.error.required,
+					pattern: {
+						value: formRegex.phone,
+						message: data.error['invalid-phone']
+					}
+				}}
 				render={({ field }) => (
 					<TextField
 						{...field}
