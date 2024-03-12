@@ -8,7 +8,7 @@ import {
 import { data } from 'dictionaries'
 import { FC } from 'react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { IPosition } from 'types/types'
+import type { IPosition } from 'types/types'
 
 interface PropsType {
 	positions: IPosition[]

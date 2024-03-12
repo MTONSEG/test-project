@@ -7,11 +7,11 @@ import UploadFile from 'components/ui/forms/UploadFile/UploadFile'
 import Text from 'components/ui/typography/Text/Text'
 import { AppContext } from 'context/AppContext'
 import { data } from 'dictionaries'
-import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { type ChangeEvent, useContext, useEffect, useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { getPositions } from 'services/getPositions'
 import { setUser } from 'services/setUser'
-import { FormValues, IFormState } from 'types/types'
+import type { FormValues, IFormState } from 'types/types'
 
 const Form = () => {
 	// Getting the application state from the context

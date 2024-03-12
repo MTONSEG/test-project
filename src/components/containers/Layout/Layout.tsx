@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import './Layout.scss'
 import Header from 'components/widgets/Header/Header'
 
@@ -10,7 +10,7 @@ const Layout: FC<PropsType> = ({ children }) => {
 	return (
 		<div className='wrapper'>
 			<Header />
-			
+
 			<main className='main'>{children}</main>
 		</div>
 	)

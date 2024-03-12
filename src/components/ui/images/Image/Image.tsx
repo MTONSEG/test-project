@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, FC, ImgHTMLAttributes } from 'react'
+import type { DetailedHTMLProps, FC, ImgHTMLAttributes } from 'react'
 
 interface PropsType
 	extends DetailedHTMLProps<
