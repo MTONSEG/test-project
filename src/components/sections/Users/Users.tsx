@@ -51,7 +51,7 @@ const Users = () => {
 	))
 
 	return (
-		<section className='users'>
+		<section id='users-section' className='users'>
 			<Heading text={data.users.title} />
 
 			<ul className='users__list'>{users.length ? userList : <>Empty</>}</ul>

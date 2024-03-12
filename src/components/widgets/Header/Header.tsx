@@ -5,17 +5,41 @@ import { data } from 'dictionaries'
 import Image from 'components/ui/images/Image/Image'
 import logo from 'assets/images/logo.png'
 import logoWebp from 'assets/images/logo.webp'
+import { useCallback } from 'react'
+import { scrollTo } from 'utils/scrollTo'
 
 const Header = () => {
+	const handleScroll = useCallback(scrollTo, [])
+
 	return (
 		<header className='header'>
 			<Container>
 				<div className='header__row'>
-					<Image src={logo} webpSrc={logoWebp} width={104} height={28} alt='Logo' />
+					<Image
+						src={logo}
+						webpSrc={logoWebp}
+						width={104}
+						height={28}
+						alt='Logo'
+					/>
 
 					<div className='header__actions'>
-						<Button className='header__btn'>{data.shared.users}</Button>
-						<Button className='header__btn'>{data.shared.signup}</Button>
+						<Button
+							className='header__btn'
+							onClick={() => {
+								handleScroll('users-section')
+							}}
+						>
+							{data.shared.users}
+						</Button>
+						<Button
+							className='header__btn'
+							onClick={() => {
+								handleScroll('form-section')
+							}}
+						>
+							{data.shared.signup}
+						</Button>
 					</div>
 				</div>
 			</Container>

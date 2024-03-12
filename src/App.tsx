@@ -16,16 +16,15 @@ const App = () => {
 	return (
 		<Layout>
 			<AppContext.Provider value={{ state, setState }}>
-
 				<Suspense fallback={<Loading />}>
 					<Hero />
+
 					<Container>
 						<Users />
 						<FormSection />
 					</Container>
 				</Suspense>
 			</AppContext.Provider>
-
 		</Layout>
 	)
 }

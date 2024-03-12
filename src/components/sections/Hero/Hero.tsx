@@ -5,8 +5,12 @@ import { data } from 'dictionaries'
 import Text from 'components/ui/typography/Text/Text'
 import Button from 'components/ui/buttons/Button/Button'
 import HeroBG from 'components/sections/Hero/HeroBG/HeroBG'
+import { scrollTo } from 'utils/scrollTo'
+import { useCallback } from 'react'
 
 const Hero = () => {
+	const handleScroll = useCallback(scrollTo, [])
+
 	return (
 		<section className='hero'>
 			<Container variant='hero'>
@@ -21,7 +25,13 @@ const Hero = () => {
 						{data.hero.text}
 					</Text>
 
-					<Button className='hero__btn' children={data.shared.signup} />
+					<Button
+						className='hero__btn'
+						children={data.shared.signup}
+						onClick={() => {
+							handleScroll('form-section')
+						}}
+					/>
 				</div>
 			</Container>
 
