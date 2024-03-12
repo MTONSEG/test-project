@@ -62,7 +62,8 @@ const Form = () => {
 				setAppState({
 					...appState,
 					currentPage: 1,
-					isRegister: true
+					isRegister: true,
+					isShowBtn: true
 				})
 			})
 			.catch((error) => {
