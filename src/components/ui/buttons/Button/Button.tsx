@@ -22,7 +22,7 @@ const Button: FC<PropsType> = ({
 			{!isLoading ? (
 				children
 			) : (
-				<CircularProgress color='secondary' />
+				<CircularProgress color='secondary'/>
 			)}
 		</button>
 	)

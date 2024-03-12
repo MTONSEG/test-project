@@ -1,7 +1,7 @@
 import Heading from 'components/ui/typography/Heading/Heading'
 import './Users.scss'
 import { data } from 'dictionaries'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getUsers } from 'services/getUsers'
 import Card from 'components/ui/cards/Card/Card'
 import Button from 'components/ui/buttons/Button/Button'
@@ -13,7 +13,10 @@ const Users = () => {
 	// Destructuring state variables
 	const { users, currentPage, userPerPage, isRegister, isShowBtn } = state
 
+	const [loading, setLoading] = useState<boolean>(false)
+
 	const handleShow = () => {
+		setLoading(true)
 		setState({ ...state, currentPage: currentPage + 1 })
 	}
 
@@ -30,6 +33,8 @@ const Users = () => {
 				users: newUsers,
 				isShowBtn: currentPage !== res?.total_pages
 			})
+
+			setLoading(false)
 		})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentPage, isRegister])
@@ -56,6 +61,7 @@ const Users = () => {
 					onClick={handleShow}
 					aria-label='Show more users'
 					style={{ minWidth: '120px', margin: '0 auto' }}
+					isLoading={loading}
 				>
 					{data.shared['show-more']}
 				</Button>
