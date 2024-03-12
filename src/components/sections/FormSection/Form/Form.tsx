@@ -68,8 +68,6 @@ const Form = () => {
 			})
 			.catch((error) => {
 				if (error instanceof Error) {
-					console.log(error.message)
-
 					setState({ ...state, errorMess: error.message })
 				}
 			})
