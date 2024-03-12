@@ -28,11 +28,6 @@
 		margin: 0 0 20px;
 	}
 
-	& .MuiInputLabel-root,
-	& .MuiInputLabel-root.Mui-focused {
-		color: var(--dark-grey);
-	}
-
 	& .MuiInputLabel-root {
 		font-size: 16px;
 		left: 3px;
@@ -55,6 +50,11 @@
 	& .MuiFormLabel-root.Mui-focused {
 		margin: 0 0 8px;
 		color: var(--black87);
+
+		&.MuiInputLabel-root,
+		&.MuiInputLabel-root.Mui-focused {
+			color: var(--dark-grey);
+		}
 	}
 
 	& .MuiButtonBase-root {
